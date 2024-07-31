@@ -19,7 +19,8 @@ export interface OntologyProps {
 export interface ExplorerProps {
     createActivity: Function,
     removeActivity: Function,
-    setActivity: Function,
+    handleClickOnActivity: Function,
+    changeCurrentActivity: Function,
     currentActivity: Activity[] | undefined,
     activities: YMap<Activity[]>,
     roles: YMap<Role[]>,

@@ -2,14 +2,15 @@
 
 import React, { SyntheticEvent, useState } from 'react';
 import type { Map as YMap } from 'yjs'
-import { Dropdown, DropdownProps, DropdownItemProps, Header, Container } from 'semantic-ui-react'
+import { Dropdown, DropdownProps, DropdownItemProps, Header, Container, LabelProps } from 'semantic-ui-react'
 
 import { Activity } from '@/app/constants/Activity';
 import { ActivityFieldList } from '@/app/constants/CustomProps';
 import { updateActivitiesList } from '@/app/utils/utils';
 
-interface ProcessSelectorProps {
+interface ActivitySelectorProps {
     createActivity: Function,
+    changeCurrentActivity: Function,
     currentActivity: Activity[],
     activities: YMap<Activity[]>,
     fieldTitle: string,
@@ -18,19 +19,20 @@ interface ProcessSelectorProps {
     showInstructions: boolean,
 }
 
-const jumpToActivity = () => {
-    console.log('click');
-}
+// TODO: set up change activity by clicking on selection element
+// const jumpToActivity = () => {
+//     console.log('click');
+// }
 
 function checkOption(_uuid: string, _activities: YMap<Activity[]>): DropdownItemProps {
     const _activity = _activities.get(_uuid);
     if(_activity !== undefined){
-        return { key: _uuid, value: _uuid, text: _activity[0].title, onDoubleClick: jumpToActivity }
+        return { key: _uuid, value: _uuid, text: _activity[0].title }
     }
     else return { key: '', value: '', text: ''}
 }
 
-export const ProcessSelector: React.FC<ProcessSelectorProps> = (props) => {
+export const ActivitySelector: React.FC<ActivitySelectorProps> = (props) => {
     const [currentSearchQuery, setCurrentSearchQuery] = useState('')
 
     const handleSelectorChange = (event: SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
@@ -39,6 +41,10 @@ export const ProcessSelector: React.FC<ProcessSelectorProps> = (props) => {
 
     const handleSearchChange = (event: SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
         setCurrentSearchQuery(data.searchQuery as string);
+    }
+
+    const handleLabelClick = (event: SyntheticEvent<HTMLElement, Event>, data: LabelProps) => {
+        props.changeCurrentActivity(data.value);
     }
 
     const handleClickCreateNewActivity = () => {
@@ -81,6 +87,7 @@ export const ProcessSelector: React.FC<ProcessSelectorProps> = (props) => {
                     noResultsMessage={noResults}
                     onSearchChange={handleSearchChange.bind(this)}
                     onChange={handleSelectorChange.bind(this)}
+                    onLabelClick={handleLabelClick.bind(this)}
                 />
             </div>
         );

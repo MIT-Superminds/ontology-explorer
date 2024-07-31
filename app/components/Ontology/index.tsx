@@ -66,10 +66,15 @@ const Ontology: React.FC<OntologyProps> = (props) => {
         setCurrentActivity(undefined);
     }
 
-    const setActivity = (event: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => {
+    const handleClickOnActivity = (event: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => {
         props.uuid = event.currentTarget.id;
-        window.history.pushState({}, '', '/explorer/'+event.currentTarget.id);
-        setCurrentActivity(activities.get(event.currentTarget.id));
+        changeCurrentActivity(event.currentTarget.id);
+    }
+
+    const changeCurrentActivity = (_uuid: string) => {
+        props.uuid = _uuid;
+        window.history.pushState({}, '', '/explorer/'+_uuid);
+        setCurrentActivity(activities.get(_uuid));
     }
 
     return (
@@ -77,7 +82,8 @@ const Ontology: React.FC<OntologyProps> = (props) => {
             <Editor
                 createActivity = {createActivity}
                 removeActivity = {removeActivity}
-                setActivity = {setActivity}
+                handleClickOnActivity = {handleClickOnActivity}
+                changeCurrentActivity = {changeCurrentActivity}
                 currentActivity = {currentActivity}
                 activities = {activities}
                 dependencies = {dependencies}
@@ -87,7 +93,8 @@ const Ontology: React.FC<OntologyProps> = (props) => {
             <Viewer
                 createActivity = {createActivity}
                 removeActivity = {removeActivity}
-                setActivity = {setActivity}
+                handleClickOnActivity = {handleClickOnActivity}
+                changeCurrentActivity = {changeCurrentActivity}
                 currentActivity = {currentActivity}
                 activities = {activities}
                 dependencies = {dependencies}

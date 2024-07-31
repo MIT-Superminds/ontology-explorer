@@ -5,7 +5,7 @@ import 'semantic-ui-css/semantic.min.css'
 
 import { ExplorerProps } from '@/app/constants/CustomProps';
 import { InputField } from './InputField';
-import { ProcessSelector } from './ProcessSelector';
+import { ActivitySelector } from './ActivitySelector';
 import { useState } from 'react';
 
 
@@ -61,36 +61,40 @@ const Editor: React.FC<ExplorerProps> = (props) => {
                         description = {'Name of activity. This should usually start with a verb. E.g., "Load baggage on plane"'}
                         showInstructions = {showInstructions}
                     />
-                    <ProcessSelector
+                    <ActivitySelector
                         createActivity = {props.createActivity}
                         currentActivity = {props.currentActivity}
+                        changeCurrentActivity = {props.changeCurrentActivity}
                         activities = {props.activities}
                         fieldTitle = {'Sub-Activities'}
                         description = {'Select other processes that make up this process (either that already exist or that you will create). Subactivities are performed to achieve the goal of the overall activity. Each of these subactivities is itself another activity with its own description in the format shown here.'}
                         propertyName = {'subactivities'}
                         showInstructions = {showInstructions}
                     />
-                    <ProcessSelector
+                    <ActivitySelector
                         createActivity = {props.createActivity}
                         currentActivity = {props.currentActivity}
+                        changeCurrentActivity = {props.changeCurrentActivity}
                         activities = {props.activities}
                         fieldTitle = {'Uses'}
                         description = {'Select other processes that use this process (either that already exist or that you will create). Uses are larger activities of which this process is a sub-activity, for example: for the process "Selling" the Use would be "Running a business"'}
                         propertyName = {'uses'}
                         showInstructions = {showInstructions}
                     />
-                    <ProcessSelector
+                    <ActivitySelector
                         createActivity = {props.createActivity}
                         currentActivity = {props.currentActivity}
+                        changeCurrentActivity = {props.changeCurrentActivity}
                         activities = {props.activities}
                         fieldTitle = {'Specializations'}
                         description = {'Select other processes that are specializations of this process (either that already exist or that you will create). Specializations are variants of the process under consideration, for example for "Selling", specializations could include "Selling in a retail store", "Selling online", "Selling with direct sales force", etc'}
                         propertyName = {'specializations'}
                         showInstructions = {showInstructions}
                     />
-                    <ProcessSelector
+                    <ActivitySelector
                         createActivity = {props.createActivity}
                         currentActivity = {props.currentActivity}
+                        changeCurrentActivity = {props.changeCurrentActivity}
                         activities = {props.activities}
                         fieldTitle = {'Generalizations'}
                         description = {'Select other processes that are generalizations of this process (either that already exist or that you will create). Generalizations are more general activities of which the process is a Specialization. For example: "Provide" is a Generalization of "Selling". Provide can include providing items for a price (that is Selling), but also giving items away for free, providing items via barter, etc'}

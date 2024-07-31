@@ -25,7 +25,6 @@ async function Explorer({ uuid }: { uuid: string }) {
 
     return (
         <div>
-            <h1>Hello Editor</h1>
             <YDocProvider clientToken={clientToken}>
                 <Ontology
                     uuid = {uuid}

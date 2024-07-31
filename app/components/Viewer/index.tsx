@@ -1,6 +1,6 @@
 import { Activity } from '@/app/constants/Activity';
 import { ExplorerProps } from '@/app/constants/CustomProps';
-import { ReactNode } from 'react';
+import { ActivitySearch } from './ActivitySearch';
 
 const Viewer: React.FC<ExplorerProps> = (props) => {
     const renderActivityList = (_uuid: string, _activityList: Activity[] | undefined) => {
@@ -10,7 +10,7 @@ const Viewer: React.FC<ExplorerProps> = (props) => {
                 <p
                     key={_uuid}
                     id={_uuid}
-                    onClick={(event) => props.setActivity(event)}
+                    onClick={(event) => props.handleClickOnActivity(event)}
                     onDoubleClick={(event) => props.removeActivity(event)}
                 >
                     {_activity.title}
@@ -35,6 +35,12 @@ const Viewer: React.FC<ExplorerProps> = (props) => {
 
     return(
         <div>
+            <ActivitySearch
+                createActivity = {props.createActivity}
+                changeCurrentActivity = {props.changeCurrentActivity}
+                currentActivity = {props.currentActivity}
+                activities = {props.activities}
+            />
             {/* <button onClick = {handleCreateActivityClick}>
                 Create Activity
             </button> */}
