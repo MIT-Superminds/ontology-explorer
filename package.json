@@ -1,0 +1,30 @@
+{
+  "name": "ontology-nextjs-ysweet",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@y-sweet/react": "^0.1.2",
+    "next": "14.2.4",
+    "react": "^18",
+    "semantic-ui-css": "^2.5.0",
+    "semantic-ui-react": "^2.1.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/uuid": "^10.0.0",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.4",
+    "postcss": "^8",
+    "react-router-dom": "^6.25.1",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5",
+    "uuid": "^10.0.0"
+  }
+}
