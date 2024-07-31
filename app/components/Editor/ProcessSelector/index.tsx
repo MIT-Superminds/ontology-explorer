@@ -2,7 +2,7 @@
 
 import React, { SyntheticEvent, useState } from 'react';
 import type { Map as YMap } from 'yjs'
-import { Dropdown, DropdownProps, DropdownItemProps } from 'semantic-ui-react'
+import { Dropdown, DropdownProps, DropdownItemProps, Header, Container } from 'semantic-ui-react'
 
 import { Activity } from '@/app/constants/Activity';
 import { ActivityFieldList } from '@/app/constants/CustomProps';
@@ -15,6 +15,7 @@ interface ProcessSelectorProps {
     fieldTitle: string,
     propertyName: ActivityFieldList,
     description: string,
+    showInstructions: boolean,
 }
 
 const jumpToActivity = () => {
@@ -60,12 +61,14 @@ export const ProcessSelector: React.FC<ProcessSelectorProps> = (props) => {
         let activityValues = Array.from(currentActivity[0][props.propertyName]);
         return (
             <div className="InputField">
-                <h5>{props.fieldTitle}</h5>
-                {/* {( props.showInstructions &&  */}
-                <p className="description">
-                    {props.description}
-                </p>
-                {/* )} */}
+                <Container fluid>
+                    <Header as='h5'>{props.fieldTitle}</Header>
+                    {( props.showInstructions && 
+                    <p className="description">
+                        {props.description}
+                    </p>
+                    )}
+                </Container>
                 <Dropdown
                     key={currentActivity[0].uuid+props.fieldTitle}
                     placeholder={props.propertyName.toUpperCase()}

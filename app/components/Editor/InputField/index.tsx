@@ -2,7 +2,7 @@
 
 import React from 'react';
 import type { Map as YMap } from 'yjs';
-import { TextArea } from 'semantic-ui-react';
+import { Container, Header, TextArea } from 'semantic-ui-react';
 
 import { Activity } from '@/app/constants/Activity';
 import { ActivityFieldText } from '@/app/constants/CustomProps';
@@ -15,6 +15,7 @@ interface InputFieldProps {
     fieldTitle: string,
     propertyName: ActivityFieldText,
     description: string,
+    showInstructions: boolean,
 }
 
 export const InputField: React.FC<InputFieldProps> = (props) => {
@@ -22,16 +23,20 @@ export const InputField: React.FC<InputFieldProps> = (props) => {
     if(currentActivity){
         return(
             <div className="InputField">
-                <h5>{props.fieldTitle}</h5>
-                {/* {( props.showInstructions &&  */}
-                <p className="description">
-                    {props.description}
-                </p>
-                {/* )} */}
+                <Container fluid>
+                    <Header as='h5'>{props.fieldTitle}</Header>
+                    {( props.showInstructions && 
+                    <p className="description">
+                        {props.description}
+                    </p>
+                    )}
+                </Container>
                 <TextArea
                     key={currentActivity[0].uuid+props.fieldTitle}
                     id={props.fieldTitle}
+                    rows={1}
                     value={currentActivity[0][props.propertyName]}
+                    placeholder={props.propertyName.toUpperCase()}
                     onChange={(e) => {
                         e.preventDefault();
                         updateActivitiesText(e.target.value, currentActivity, props.activities, props.propertyName)
