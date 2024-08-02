@@ -41,6 +41,7 @@ const Viewer: React.FC<ExplorerProps> = (props) => {
             <MermaidChart
                 activities={props.activities}
                 type={toggleLabelText()}
+                changeCurrentActivity = {props.changeCurrentActivity}
             />
         </div>
     )

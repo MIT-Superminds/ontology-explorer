@@ -7,15 +7,13 @@ import { Activity } from '@/app/constants/Activity';
 interface MermaidChartProps {
     activities: YMap<Activity[]>,
     type: string,
+    changeCurrentActivity: Function,
 }
 
-export const MermaidChart: React.FC<MermaidChartProps> = ({ activities, type }) => {
+export const MermaidChart: React.FC<MermaidChartProps> = ({ activities, type, changeCurrentActivity }) => {    
     const chartRef = useRef<HTMLDivElement>(null);
-
-    mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
-
-    let genSpec = `graph LR;`
-    let usePart = `graph TD;`
+    let genSpec = `graph LR;`;
+    let usePart = `graph TD;`;
 
     let chartDefinition = () => {
         if(type=="Generalizations/Specializations")
@@ -36,8 +34,6 @@ export const MermaidChart: React.FC<MermaidChartProps> = ({ activities, type }) 
             if (_activityB){
                 let titleB = _activityB[0].title
                 genSpec += `\n${_uuidA}["${titleA}"]---${_uuidB}["${titleB}"];`
-                genSpec += `\nclick ${_uuidA} mermaidNodeClick`
-                genSpec += `\nclick ${_uuidB} mermaidNodeClick`
             }
         })
   
@@ -46,8 +42,6 @@ export const MermaidChart: React.FC<MermaidChartProps> = ({ activities, type }) 
             if (_activityB){
                 let titleB = _activityB[0].title
                 usePart += `\n${_uuidA}["${titleA}"]---${_uuidB}["${titleB}"];`
-                usePart += `\nclick ${_uuidA} mermaidNodeClick`
-                usePart += `\nclick ${_uuidB} mermaidNodeClick`
             }
         })
     }
@@ -64,28 +58,11 @@ export const MermaidChart: React.FC<MermaidChartProps> = ({ activities, type }) 
     ))
 
     useEffect(() => {
-        const script = document.createElement('script');
-      
-        script.text = `function mermaidNodeClick(nodeId) {
-console.log("clicked", nodeId)
-}`;
-        document.body.appendChild(script);
-      
-        return () => {
-          document.body.removeChild(script);
-        }
-      }, []);
-
-    useEffect(() => {
-        mermaid.contentLoaded();
-    })
-
-    useEffect(() => {
         if (chartRef.current){
             chartRef.current.removeAttribute('data-processed');
             mermaid.contentLoaded();
         }
-    }, [type])
+    }, [type, chartDefinition])
 
     return (
         <div ref={chartRef} className="mermaid">
