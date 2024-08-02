@@ -11,6 +11,27 @@ export function randomColor() {
 }
 
 
+function getCookie(_document: Document, name: string) {
+    var match = _document.cookie.match(RegExp('(?:^|;\\s*)' + name + '=([^;]*)')); 
+    return match ? match[1] : null;
+}
+
+
+export async function checkLoginStatus(document: Document): Promise<boolean> {
+    let response = await fetch("http://127.0.0.1:8000/auth/checkUser",
+        {
+            method: 'post',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                "access_token": getCookie(document, "ontology_access_token")
+            })
+        }
+    );
+    let data = await response.json();
+    return data;
+}
+
+
 export function updateActivitiesText(_value: string, _currentActivity: Activity[], _activities: YMap<Activity[]>, _propertyName: ActivityFieldText){
     _currentActivity[0][_propertyName] = _value;
     _activities.set(_currentActivity[0].uuid, _currentActivity);

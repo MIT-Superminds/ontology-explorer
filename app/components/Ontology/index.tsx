@@ -4,7 +4,7 @@ import { useMap, usePresence, usePresenceSetter } from '@y-sweet/react'
 import { useEffect, useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import { Grid } from 'semantic-ui-react'
-
+import { useRouter } from 'next/navigation'
 
 import { Activity } from '@/app/constants/Activity'
 import { Role } from '@/app/constants/Role'
@@ -12,7 +12,7 @@ import { Dependency } from '@/app/constants/Dependency'
 import { EvaluationDimension } from '@/app/constants/EvaluationDimension'
 import { OntologyProps } from '@/app/constants/CustomProps'
 
-import { randomColor, cleanUpRelatedBeforeDelete } from '@/app//utils/utils'
+import { randomColor, cleanUpRelatedBeforeDelete, checkLoginStatus } from '@/app//utils/utils'
 
 import Editor from '@/app/components/Editor'
 import Viewer from '@/app/components/Viewer'
@@ -20,6 +20,8 @@ import Viewer from '@/app/components/Viewer'
 type Presence = { id_focus: string; color: string; }
 
 const Ontology: React.FC<OntologyProps> = (props) => {
+    const router = useRouter();
+
     const activities = useMap<Array<Activity>>('activities')
     const dependencies = useMap<Array<Dependency>>('dependencies')
     const evaluationDimensions = useMap<Array<EvaluationDimension>>('evaluationDimensions')
@@ -41,15 +43,24 @@ const Ontology: React.FC<OntologyProps> = (props) => {
     })
 
     const [myColor, _] = useState(randomColor)
+    const [loggedIn, setLoggedIn] = useState(false)
     const presence = usePresence<Presence>({ includeSelf: true })
     const setPresence = usePresenceSetter<Presence>()
 
     useEffect(() => {
-        setPresence({
-            id_focus: '',
-            color: myColor,
+        checkLoginStatus(document).then((loggedIn) => {
+            if(!loggedIn){
+                router.push('/auth/login');
+            }
+            else{
+                setLoggedIn(true);
+                setPresence({
+                    id_focus: '',
+                    color: myColor,
+                })
+            }
         })
-    },[], )
+    }, [], )
 
     function createActivity(title: string = "New Activity", changeToNewActivity: boolean = true): string {
         const newActivity = new Activity(uuid());
@@ -81,6 +92,7 @@ const Ontology: React.FC<OntologyProps> = (props) => {
     }
 
     return (
+        (loggedIn &&
         <Grid>
             <Grid.Column width={6}>
                 <Editor
@@ -109,6 +121,7 @@ const Ontology: React.FC<OntologyProps> = (props) => {
                 />
             </Grid.Column>
         </Grid>
+        )
     )
 }
 

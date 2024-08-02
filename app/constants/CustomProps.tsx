@@ -6,7 +6,7 @@ import { EvaluationDimension } from '@/app/constants/EvaluationDimension';
 import { Role } from '@/app/constants/Role';
 
 
-export type ActivityFieldText = 'title' | 'description' | 'activityType' | 'preconditions' | 'goal' | 'otherResults' | 'equipment' | 'performance' | 'sources'
+export type ActivityFieldText = 'title' | 'description' | 'preconditions' | 'goal' | 'otherResults' | 'equipment' | 'performance' | 'sources'
 
 
 export type ActivityFieldList = 'subactivities' | 'uses' | 'specializations' | 'generalizations'

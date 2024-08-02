@@ -5,7 +5,6 @@ import { Ontology } from "../components";
 
 
 async function Explorer({ uuid }: { uuid: string }) {
-
     let connectionString = "";
     if (process.env.CONNECTION_STRING){
         connectionString = process.env.CONNECTION_STRING;
