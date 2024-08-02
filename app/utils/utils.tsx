@@ -18,7 +18,7 @@ function getCookie(_document: Document, name: string) {
 
 
 export async function checkLoginStatus(document: Document): Promise<boolean> {
-    let response = await fetch(process.env.API_PATH+"/checkUser",
+    let response = await fetch(process.env.NEXT_PUBLIC_API_PATH+"/checkUser",
         {
             method: 'post',
             headers: {'Content-Type':'application/json'},
