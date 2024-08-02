@@ -1,6 +1,8 @@
-import { Ontology } from "../components";
 import { YDocProvider } from '@y-sweet/react'
 import { getOrCreateDocAndToken, encodeClientToken } from '@y-sweet/sdk'
+
+import { Ontology } from "../components";
+
 
 async function Explorer({ uuid }: { uuid: string }) {
 

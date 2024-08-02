@@ -52,7 +52,6 @@ export const ActivitySearch: React.FC<ActivitySearchProps> = (props) => {
             placeholder='Search for an Activity'
             value={''}
             defaultSelectedLabel={''}
-            fluid
             search
             selection
             options={activityOptions}

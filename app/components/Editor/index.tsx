@@ -36,8 +36,8 @@ const Editor: React.FC<ExplorerProps> = (props) => {
 
     if(currentUUID() && props.currentActivity){
         return(
-            <div id='Editor'>
-                <Form id='Form'>
+            <div id='Editor' style={{padding: '1vh', height: '98vh', overflowY: 'auto'}}>
+                <Form id='Form' size='mini'>
                     <Container
                         id='requiredFields'
                         fluid
@@ -45,6 +45,7 @@ const Editor: React.FC<ExplorerProps> = (props) => {
                     <Button
                         id='showHideInstructionsButton'
                         onClick={handleClickShowInstructions}
+                        size='mini'
                     >
                     {(showInstructions && 
                         'Hide Instructions'
@@ -117,6 +118,7 @@ const Editor: React.FC<ExplorerProps> = (props) => {
                     <Button
                         id='showHideOptionalFieldsButton'
                         onClick={handleClickShowOptionalFields}
+                        size='mini'
                     >
                     {(showOptionalFields && 
                         'Hide Optional Fields'

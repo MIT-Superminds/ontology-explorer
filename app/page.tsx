@@ -1,11 +1,22 @@
-import Link from "next/link";
+'use client'
+
+import { Button, Grid, Header } from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css'
 
 export default function Home() {
 
-  return (
-    <div>
-      <h1>Welcome to the Collective Intelligence Ontology</h1>
-      <Link href="/explorer">Go To Ontology Explorer</Link>
-    </div>
-  )
+    return (
+        <div>
+            <Grid
+                textAlign='center'
+                verticalAlign='middle'
+                style={{height: '100vh'}}
+            >
+                <Grid.Column>
+                    <Header as='h1'>Collective Intelligence Ontology</Header>
+                    <Button href="/explorer">Go To Ontology Explorer</Button>
+                </Grid.Column>
+            </Grid>
+        </div>
+    )
 }

@@ -1,36 +1,27 @@
-import { Activity } from '@/app/constants/Activity';
+'use client'
+
+import { useState } from 'react';
+import { Radio } from 'semantic-ui-react'
+
 import { ExplorerProps } from '@/app/constants/CustomProps';
 import { ActivitySearch } from './ActivitySearch';
+import { MermaidChart } from './MermaidChart';
 
 const Viewer: React.FC<ExplorerProps> = (props) => {
-    const renderActivityList = (_uuid: string, _activityList: Activity[] | undefined) => {
-        if(_activityList){
-            const _activity = _activityList[0];
-            return(
-                <p
-                    key={_uuid}
-                    id={_uuid}
-                    onClick={(event) => props.handleClickOnActivity(event)}
-                    onDoubleClick={(event) => props.removeActivity(event)}
-                >
-                    {_activity.title}
-                </p>
-            )
-        }
+    const [chartToggle, setChartToggle] = useState<boolean>(false);
+
+    function handleChartToggle(){
+        console.log(chartToggle);
+        setChartToggle(!chartToggle);
     }
 
-    function handleCreateActivityClick(){
-        props.createActivity();
-    }
-
-    function currentUUID(): string {
-        if(props.currentActivity){
-            const _currentActivity = props.activities.get(props.currentActivity[0].uuid);
-            if (_currentActivity){
-                return _currentActivity[0].uuid;
-            }
+    const toggleLabelText = ():string => {
+        if (chartToggle==true){
+            return "Generalizations/Specializations"
         }
-        return ''
+        else{
+            return "Uses/Subactivities"
+        }
     }
 
     return(
@@ -41,17 +32,16 @@ const Viewer: React.FC<ExplorerProps> = (props) => {
                 currentActivity = {props.currentActivity}
                 activities = {props.activities}
             />
-            {/* <button onClick = {handleCreateActivityClick}>
-                Create Activity
-            </button> */}
-
-            {/* {currentUUID() &&
-                <div>Current Activity: {currentUUID()}</div>
-            } */}
-
-            {Array.from(props.activities.keys()).map( (_uuid: string) => (
-                renderActivityList(_uuid, props.activities.get(_uuid))
-            ))}
+            <br/>
+            <Radio
+                toggle
+                label={toggleLabelText()}
+                onChange={handleChartToggle}
+            />
+            <MermaidChart
+                activities={props.activities}
+                type={toggleLabelText()}
+            />
         </div>
     )
 }

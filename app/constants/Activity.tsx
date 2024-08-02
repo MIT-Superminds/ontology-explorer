@@ -2,7 +2,6 @@ export class Activity {
     uuid: string;
     title: string;
     description: string;
-    activityType: string;
     preconditions: string;
     goal: string;
     otherResults: string;
@@ -22,7 +21,6 @@ export class Activity {
         this.uuid = _uuid
         this.title = '';
         this.description = '';
-        this.activityType = '';
         this.preconditions = '';
         this.goal = '';
         this.otherResults = '';

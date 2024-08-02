@@ -3,6 +3,8 @@
 import { useMap, usePresence, usePresenceSetter } from '@y-sweet/react'
 import { useEffect, useState } from 'react'
 import { v4 as uuid } from 'uuid'
+import { Grid } from 'semantic-ui-react'
+
 
 import { Activity } from '@/app/constants/Activity'
 import { Role } from '@/app/constants/Role'
@@ -11,6 +13,7 @@ import { EvaluationDimension } from '@/app/constants/EvaluationDimension'
 import { OntologyProps } from '@/app/constants/CustomProps'
 
 import { randomColor, cleanUpRelatedBeforeDelete } from '@/app//utils/utils'
+
 import Editor from '@/app/components/Editor'
 import Viewer from '@/app/components/Viewer'
 
@@ -78,30 +81,34 @@ const Ontology: React.FC<OntologyProps> = (props) => {
     }
 
     return (
-        <div className="space-y-3 p-4 lg:p-8">
-            <Editor
-                createActivity = {createActivity}
-                removeActivity = {removeActivity}
-                handleClickOnActivity = {handleClickOnActivity}
-                changeCurrentActivity = {changeCurrentActivity}
-                currentActivity = {currentActivity}
-                activities = {activities}
-                dependencies = {dependencies}
-                evaluationDimensions = {evaluationDimensions}
-                roles = {roles}
-            />
-            <Viewer
-                createActivity = {createActivity}
-                removeActivity = {removeActivity}
-                handleClickOnActivity = {handleClickOnActivity}
-                changeCurrentActivity = {changeCurrentActivity}
-                currentActivity = {currentActivity}
-                activities = {activities}
-                dependencies = {dependencies}
-                evaluationDimensions = {evaluationDimensions}
-                roles = {roles}
-            />
-        </div>
+        <Grid>
+            <Grid.Column width={6}>
+                <Editor
+                    createActivity = {createActivity}
+                    removeActivity = {removeActivity}
+                    handleClickOnActivity = {handleClickOnActivity}
+                    changeCurrentActivity = {changeCurrentActivity}
+                    currentActivity = {currentActivity}
+                    activities = {activities}
+                    dependencies = {dependencies}
+                    evaluationDimensions = {evaluationDimensions}
+                    roles = {roles}
+                />
+            </Grid.Column>
+            <Grid.Column width={10} textAlign='center'>
+                <Viewer
+                    createActivity = {createActivity}
+                    removeActivity = {removeActivity}
+                    handleClickOnActivity = {handleClickOnActivity}
+                    changeCurrentActivity = {changeCurrentActivity}
+                    currentActivity = {currentActivity}
+                    activities = {activities}
+                    dependencies = {dependencies}
+                    evaluationDimensions = {evaluationDimensions}
+                    roles = {roles}
+                />
+            </Grid.Column>
+        </Grid>
     )
 }
 
