@@ -12,8 +12,10 @@ interface MermaidChartProps {
 
 export const MermaidChart: React.FC<MermaidChartProps> = ({ activities, type, changeCurrentActivity }) => {    
     const chartRef = useRef<HTMLDivElement>(null);
-    let genSpec = `graph LR;`;
-    let usePart = `graph TD;`;
+    mermaid.initialize({ startOnLoad: true, securityLevel: 'loose'})
+    
+    let genSpec: string = '';
+    let usePart: string = '';
 
     let chartDefinition = () => {
         if(type=="Generalizations/Specializations")
@@ -47,6 +49,12 @@ export const MermaidChart: React.FC<MermaidChartProps> = ({ activities, type, ch
     }
 
     const traverseActivityList = (_uuid: string, _activityList: Activity[] | undefined) => {
+        if(genSpec === ''){
+            genSpec = `graph LR;`;
+        }
+        if(usePart === ''){
+            usePart = `graph TD;`;
+        }
         if(_activityList){
             const _activity = _activityList[0];
             addToCharts(_activity)
