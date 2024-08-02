@@ -18,7 +18,7 @@ function getCookie(_document: Document, name: string) {
 
 
 export async function checkLoginStatus(document: Document): Promise<boolean> {
-    let response = await fetch("http://127.0.0.1:8000/auth/checkUser",
+    let response = await fetch(process.env.API_PATH+"/checkUser",
         {
             method: 'post',
             headers: {'Content-Type':'application/json'},
