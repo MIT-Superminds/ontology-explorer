@@ -1,23 +1,25 @@
-import React, { act, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import mermaid from 'mermaid';
 import type { Map as YMap } from 'yjs'
 
 import { Activity } from '@/app/constants/Activity';
+import Mermaid from './Mermaid';
 
 interface MermaidChartProps {
     activities: YMap<Activity[]>,
     type: string,
     changeCurrentActivity: Function,
+    currentActivity: Activity[] | undefined,
 }
 
-export const MermaidChart: React.FC<MermaidChartProps> = ({ activities, type, changeCurrentActivity }) => {    
+export const MermaidChart: React.FC<MermaidChartProps> = ({ activities, type, changeCurrentActivity, currentActivity }) => {    
     const chartRef = useRef<HTMLDivElement>(null);
-    mermaid.initialize({ startOnLoad: true, securityLevel: 'loose'})
+    mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' })
     
     let genSpec: string = '';
     let usePart: string = '';
 
-    let chartDefinition = () => {
+    const chartDefinition = () => {
         if(type=="Generalizations/Specializations")
             return genSpec;
         else{
@@ -65,16 +67,10 @@ export const MermaidChart: React.FC<MermaidChartProps> = ({ activities, type, ch
         traverseActivityList(_uuid, activities.get(_uuid))
     ))
 
-    useEffect(() => {
-        if (chartRef.current){
-            chartRef.current.removeAttribute('data-processed');
-            mermaid.contentLoaded();
-        }
-    }, [type, chartDefinition])
-
     return (
-        <div ref={chartRef} className="mermaid">
-            {chartDefinition()}
-        </div>
+        <Mermaid
+            chart={chartDefinition()}
+            chartRef={chartRef}
+        />
     );
 };

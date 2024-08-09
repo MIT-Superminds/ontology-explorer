@@ -22,9 +22,9 @@ export const InputField: React.FC<InputFieldProps> = (props) => {
     const currentActivity = props.activities.get(props.currentActivity[0].uuid)
     if(currentActivity){
         return(
-            <div className="InputField">
+            <div className="InputField" style={{paddingBottom: '2em'}}>
                 <Container fluid>
-                    <Header as='h5'>{props.fieldTitle}</Header>
+                    <Header as='h5' style={{marginBottom: '0'}}>{props.fieldTitle}</Header>
                     {( props.showInstructions && 
                     <p className="description">
                         {props.description}

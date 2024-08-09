@@ -6,6 +6,7 @@ import 'semantic-ui-css/semantic.min.css'
 import { ExplorerProps } from '@/app/constants/CustomProps';
 import { InputField } from './InputField';
 import { ActivitySelector } from './ActivitySelector';
+import { deleteActivity } from './../../utils/utils';
 import { useState } from 'react';
 
 
@@ -22,6 +23,17 @@ const Editor: React.FC<ExplorerProps> = (props) => {
     function handleClickShowOptionalFields(event: React.MouseEvent<HTMLButtonElement, MouseEvent>){
         event.preventDefault();
         setShowOptionalFields(!showOptionalFields);
+    }
+
+    function handleClickDelete(event: React.MouseEvent<HTMLButtonElement, MouseEvent>){
+        event.preventDefault();
+        const _currentActivity = props.currentActivity;
+            if(_currentActivity){
+                if (confirm("Are you sure you want to delete this activity?")) {
+                    deleteActivity(props.activities, _currentActivity[0].uuid);
+                    props.changeCurrentActivity(undefined);
+                }
+          }
     }
 
     function currentUUID(): string {
@@ -192,6 +204,9 @@ const Editor: React.FC<ExplorerProps> = (props) => {
                         description = {'List materials used to fill out this process map e.g. title of document received from partner organization, field interviews, reference model (including URL), LLM-generated synthetic map, etc.'}
                         showInstructions = {showInstructions}
                     />
+                    <Button
+                        onClick={handleClickDelete}
+                    >Delete</Button>
                     </Container>
                     )}
                 </Form>

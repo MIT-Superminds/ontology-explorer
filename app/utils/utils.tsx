@@ -18,17 +18,24 @@ function getCookie(_document: Document, name: string) {
 
 
 export async function checkLoginStatus(document: Document): Promise<boolean> {
-    let response = await fetch(process.env.NEXT_PUBLIC_API_PATH+"/checkUser",
-        {
-            method: 'post',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({
-                "access_token": getCookie(document, "ontology_access_token")
-            })
-        }
-    );
-    let data = await response.json();
-    return data;
+    if(getCookie(document, "ontology_access_token")){
+        let response = await fetch(process.env.NEXT_PUBLIC_API_PATH+"/checkUser",
+            {
+                method: 'post',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({
+                    "access_token": getCookie(document, "ontology_access_token")
+                })
+            }
+        );
+        console.log(response);
+        let data = await response.json();
+        return data;
+    }
+    else{
+        return false;
+    }
+    
 }
 
 
@@ -48,6 +55,14 @@ function typeRelationMap(_switch: ActivityFieldList): ActivityFieldList {
             return 'generalizations'
         case 'generalizations':
             return 'specializations'
+    }
+}
+
+
+export function deleteActivity(_activities: YMap<Activity[]>, UUIDtoDelete: string,){
+    const _activityToDelete = _activities.get(UUIDtoDelete)
+    if (_activityToDelete){
+        _activities.delete(UUIDtoDelete);
     }
 }
 
