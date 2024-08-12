@@ -49,15 +49,15 @@ const Ontology: React.FC<OntologyProps> = (props) => {
 
     useEffect(() => {
         checkLoginStatus(document).then((loggedIn) => {
-            if(!loggedIn){
-                router.push(process.env.NEXT_PUBLIC_API_PATH+'/login');
-            }
-            else{
+            if(loggedIn){
                 setLoggedIn(true);
                 setPresence({
                     id_focus: '',
                     color: myColor,
                 })
+            }
+            else{
+                router.push(process.env.NEXT_PUBLIC_API_PATH+'/login');
             }
         })
     }, [], )

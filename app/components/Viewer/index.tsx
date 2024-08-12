@@ -8,7 +8,7 @@ import { ActivitySearch } from './ActivitySearch';
 import { MermaidChart } from './MermaidChart';
 
 const Viewer: React.FC<ExplorerProps> = (props) => {
-    const [chartToggle, setChartToggle] = useState<boolean>(false);
+    const [chartToggle, setChartToggle] = useState<boolean>(true);
 
     function handleChartToggle(){
         console.log(chartToggle);
@@ -27,10 +27,10 @@ const Viewer: React.FC<ExplorerProps> = (props) => {
     return(
         <div>
             <ActivitySearch
-                createActivity = {props.createActivity}
-                changeCurrentActivity = {props.changeCurrentActivity}
-                currentActivity = {props.currentActivity}
-                activities = {props.activities}
+                createActivity={props.createActivity}
+                changeCurrentActivity={props.changeCurrentActivity}
+                currentActivity={props.currentActivity}
+                activities={props.activities}
             />
             <br/>
             <Radio
@@ -41,7 +41,8 @@ const Viewer: React.FC<ExplorerProps> = (props) => {
             <MermaidChart
                 activities={props.activities}
                 type={toggleLabelText()}
-                changeCurrentActivity = {props.changeCurrentActivity}
+                changeCurrentActivity={props.changeCurrentActivity}
+                currentActivity={props.currentActivity}
             />
         </div>
     )
