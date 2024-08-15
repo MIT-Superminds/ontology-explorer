@@ -19,7 +19,7 @@ import Viewer from '@/app/components/Viewer'
 
 type Presence = { id_focus: string; color: string; }
 
-const Ontology: React.FC<OntologyProps> = (props) => {
+const Explorer: React.FC<OntologyProps> = (props) => {
     const router = useRouter();
 
     const activities = useMap<Array<Activity>>('activities')
@@ -125,4 +125,4 @@ const Ontology: React.FC<OntologyProps> = (props) => {
     )
 }
 
-export default Ontology;
+export default Explorer;
