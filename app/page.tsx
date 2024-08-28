@@ -1,7 +1,9 @@
 'use client'
 
-import { Button, Grid, Header } from 'semantic-ui-react';
+import { Grid, Header } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css'
+
+import { Auth } from '@/app/components/'
 
 export default function Home() {
 
@@ -14,7 +16,7 @@ export default function Home() {
             >
                 <Grid.Column>
                     <Header as='h1'>Collective Intelligence Ontology</Header>
-                    <Button href="/explorer">Go To Ontology Explorer</Button>
+                    <Auth/>
                 </Grid.Column>
             </Grid>
         </div>

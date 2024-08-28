@@ -57,7 +57,7 @@ const Ontology: React.FC<OntologyProps> = (props) => {
                 })
             }
             else{
-                router.push(process.env.NEXT_PUBLIC_API_PATH+'/login');
+                router.push('/');
             }
         })
     }, [], )
