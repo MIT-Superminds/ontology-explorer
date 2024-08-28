@@ -18,19 +18,8 @@ function getCookie(_document: Document, name: string) {
 
 
 export async function checkLoginStatus(document: Document): Promise<boolean> {
-    if(getCookie(document, "ontology_access_token")){
-        let response = await fetch(process.env.NEXT_PUBLIC_API_PATH+"/checkUser",
-            {
-                method: 'post',
-                headers: {'Content-Type':'application/json'},
-                body: JSON.stringify({
-                    "access_token": getCookie(document, "ontology_access_token")
-                })
-            }
-        );
-        console.log(response);
-        let data = await response.json();
-        return data;
+    if(getCookie(document, "ontology_auth_name")){
+        return true;
     }
     else{
         return false;
