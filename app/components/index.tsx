@@ -1,9 +1,11 @@
+import Auth from './Auth'
 import Editor from './Editor'
-import Ontology from './Ontology'
+import Explorer from './Explorer'
 import Viewer from './Viewer'
 
 export {
+    Auth,
     Editor,
-    Ontology,
+    Explorer,
     Viewer,
 }

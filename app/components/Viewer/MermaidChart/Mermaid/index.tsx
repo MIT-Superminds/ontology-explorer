@@ -1,4 +1,4 @@
-import React, { Context } from "react";
+import React from "react";
 import mermaid from "mermaid";
 
 
@@ -38,7 +38,7 @@ export default class Mermaid extends React.Component<MermaidProps, MermaidState>
 
     async drawDiagram(chart: string) {
         let element = document.querySelector("#mermaid-container");
-        if(element){
+        if (element){
             const graphDefinition = chart
             mermaid.render("mermaid-chart", graphDefinition).then(({svg}) => {
                 element.innerHTML = svg;

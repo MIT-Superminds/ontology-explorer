@@ -1,10 +1,10 @@
 import { YDocProvider } from '@y-sweet/react'
 import { getOrCreateDocAndToken, encodeClientToken } from '@y-sweet/sdk'
 
-import { Ontology } from "../components";
+import { Explorer } from "../components";
 
 
-async function Explorer({ uuid }: { uuid: string }) {
+async function ExplorerPage({ uuid }: { uuid: string }) {
     let connectionString = "";
     if (process.env.CONNECTION_STRING){
         connectionString = process.env.CONNECTION_STRING;
@@ -27,7 +27,7 @@ async function Explorer({ uuid }: { uuid: string }) {
     return (
         <div>
             <YDocProvider clientToken={clientToken}>
-                <Ontology
+                <Explorer
                     uuid = {uuid}
                 />
             </YDocProvider>
@@ -35,4 +35,4 @@ async function Explorer({ uuid }: { uuid: string }) {
     )
 }
 
-export default Explorer;
+export default ExplorerPage;

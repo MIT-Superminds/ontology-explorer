@@ -11,26 +11,35 @@ export function randomColor() {
 }
 
 
-function getCookie(_document: Document, name: string) {
+export function getCookie(_document: Document, name: string) {
     var match = _document.cookie.match(RegExp('(?:^|;\\s*)' + name + '=([^;]*)')); 
     return match ? match[1] : null;
 }
 
 
 export async function checkLoginStatus(document: Document): Promise<boolean> {
-    if(getCookie(document, "ontology_access_token")){
-        let response = await fetch(process.env.NEXT_PUBLIC_API_PATH+"/checkUser",
-            {
-                method: 'post',
-                headers: {'Content-Type':'application/json'},
+    let email = getCookie(document, "ontology_auth_email");
+    let access = getCookie(document, "ontology_auth_access");
+    if(email && access){
+        try{
+            let response = await fetch(process.env.NEXT_PUBLIC_API_PATH+'/verify',{
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
                 body: JSON.stringify({
-                    "access_token": getCookie(document, "ontology_access_token")
+                    username: email,
+                    access_token: access,
                 })
-            }
-        );
-        console.log(response);
-        let data = await response.json();
-        return data;
+            })
+            if (!response.ok) throw response.statusText;
+            const res_bool = await response.json();
+            return res_bool;
+            
+        }catch{
+            return false;
+        }
     }
     else{
         return false;

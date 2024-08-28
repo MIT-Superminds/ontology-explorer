@@ -1,8 +1,8 @@
-import Explorer from '../page';
+import ExplorerPage from '../page';
 
-export default function ExplorerWithParams({ params }: { params: { uuid: string } }){
+export default function ExplorerPageWithParams({ params }: { params: { uuid: string } }){
     return (
-        <Explorer
+        <ExplorerPage
             uuid = {params.uuid}
         />
     )

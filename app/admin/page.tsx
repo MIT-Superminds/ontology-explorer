@@ -1,9 +1,9 @@
 import { YDocProvider } from '@y-sweet/react'
 import { getOrCreateDocAndToken } from '@y-sweet/sdk'
 
-import Export from '../components/Export';
+import Admin from '../components/Admin';
 
-async function ExportPage() {
+async function AdminPage() {
 
     let connectionString = "";
     if (process.env.CONNECTION_STRING){
@@ -20,10 +20,10 @@ async function ExportPage() {
     return (
         <div>
             <YDocProvider clientToken={clientToken}>
-                <Export/>
+                <Admin/>
             </YDocProvider>
         </div>
     )
 }
 
-export default ExportPage;
+export default AdminPage;
