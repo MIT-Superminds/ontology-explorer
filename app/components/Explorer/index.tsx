@@ -12,12 +12,12 @@ import { Dependency } from '@/app/constants/Dependency'
 import { EvaluationDimension } from '@/app/constants/EvaluationDimension'
 import { OntologyProps } from '@/app/constants/CustomProps'
 
-import { randomColor, cleanUpRelatedBeforeDelete, checkLoginStatus } from '@/app//utils/utils'
+import { randomColor, cleanUpRelatedBeforeDelete, checkLoginStatus, getCookie } from '@/app//utils/utils'
 
 import Editor from '@/app/components/Editor'
 import Viewer from '@/app/components/Viewer'
 
-type Presence = { id_focus: string; color: string; }
+type Presence = { id_focus: string; email: string|null; name: string|null; color: string; }
 
 const Explorer: React.FC<OntologyProps> = (props) => {
     const router = useRouter();
@@ -50,9 +50,15 @@ const Explorer: React.FC<OntologyProps> = (props) => {
     useEffect(() => {
         checkLoginStatus(document).then((loggedIn) => {
             if(loggedIn){
+                let name = getCookie(document, "ontology_auth_name");
+                if(name){
+                    name = decodeURI(name);
+                }
                 setLoggedIn(true);
                 setPresence({
                     id_focus: '',
+                    email: getCookie(document, "ontology_auth_email"),
+                    name: name,
                     color: myColor,
                 })
             }

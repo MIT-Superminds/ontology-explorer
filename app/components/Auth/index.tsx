@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
-import { ChangeEvent, Component, FormEvent } from 'react';
+import { ChangeEvent, FormEvent } from 'react';
 import { Form, Input, Button, Label } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 
@@ -40,7 +40,7 @@ export const Auth: React.FC = () => {
 
             const auth_data = await response.json();
             const expiration = new Date(auth_data.expires * 1000);
-            Cookies.set('ontology_auth_emal', _email, { expires: expiration });
+            Cookies.set('ontology_auth_email', _email, { expires: expiration });
             Cookies.set('ontology_auth_name', auth_data.name, { expires: expiration });
             Cookies.set('ontology_auth_access', auth_data.access_token, { expires: expiration });
             Cookies.set('ontology_auth_refresh', auth_data.refresh_token, { expires: expiration });
