@@ -33,7 +33,7 @@ export const InputField: React.FC<InputFieldProps> = (props) => {
                 </Container>
                 <TextArea
                     key={currentActivity[0].uuid+props.fieldTitle}
-                    id={props.fieldTitle}
+                    id={currentActivity[0].uuid+props.fieldTitle}
                     rows={1}
                     value={currentActivity[0][props.propertyName]}
                     placeholder={props.propertyName.toUpperCase()}

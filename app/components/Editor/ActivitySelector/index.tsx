@@ -49,7 +49,7 @@ export const ActivitySelector: React.FC<ActivitySelectorProps> = (props) => {
 
     const handleClickCreateNewActivity = () => {
         let newActivityUUID: string = props.createActivity(currentSearchQuery, false);
-        // make deep copy because array pointers
+        // now make a deep copy because array pointers
         let newList = structuredClone(props.currentActivity[0][props.propertyName])
         newList.push(newActivityUUID)
         updateActivitiesList(newList, props.currentActivity[0].uuid, props.activities, props.propertyName);
@@ -77,6 +77,7 @@ export const ActivitySelector: React.FC<ActivitySelectorProps> = (props) => {
                 </Container>
                 <Dropdown
                     key={currentActivity[0].uuid+props.fieldTitle}
+                    id={currentActivity[0].uuid+props.fieldTitle}
                     placeholder={props.propertyName.toUpperCase()}
                     fluid
                     multiple
@@ -84,6 +85,7 @@ export const ActivitySelector: React.FC<ActivitySelectorProps> = (props) => {
                     selection
                     value={activityValues}
                     options={activityOptions}
+                    closeOnChange={true}
                     noResultsMessage={noResults}
                     onSearchChange={handleSearchChange.bind(this)}
                     onChange={handleSelectorChange.bind(this)}

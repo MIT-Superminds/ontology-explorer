@@ -4,6 +4,19 @@ import { Activity } from '@/app/constants/Activity';
 import { ActivityFieldText, ActivityFieldList } from '@/app/constants/CustomProps';
 
 
+export function activitySorter(a: Activity | undefined, b: Activity | undefined){
+    if(a && b){
+        if (a.title < b.title)
+            return -1;
+        if (a.title > b.title)
+            return 1;
+        return 0;
+    }else{
+        return 0;
+    }
+}
+
+
 export function randomColor() {
     const hue = Math.random() * 360
     const value = Math.random() * 0.5 + 0.25

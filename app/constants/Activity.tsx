@@ -1,3 +1,6 @@
+import { Inheritance } from './Inheritance';
+import { EvaluationDimension } from './EvaluationDimension';
+
 export class Activity {
     uuid: string;
     locked: boolean;
@@ -6,7 +9,7 @@ export class Activity {
     preconditions: string;
     goal: string;
     otherResults: string;
-    evaluationDimensions: Array<string>;
+    evaluationDimensions: Array<EvaluationDimension>;
     roles: Array<string>;
     equipment: string;
     performance: string;
@@ -19,6 +22,7 @@ export class Activity {
     modifiedAuthors: Array<string>;
     createdTime: string;
     modifiedTime: string;
+    inheritance: Inheritance;
 
     constructor(_uuid: string){
         this.uuid = _uuid
@@ -42,6 +46,7 @@ export class Activity {
         this.modifiedAuthors = [];
         this.createdTime = new Date().toJSON();
         this.modifiedTime = new Date().toJSON();
+        this.inheritance = new Inheritance();
     }
 
 };

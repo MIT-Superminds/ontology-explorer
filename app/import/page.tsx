@@ -1,9 +1,9 @@
 import { YDocProvider } from '@y-sweet/react'
 import { getOrCreateDocAndToken, encodeClientToken } from '@y-sweet/sdk'
 
-import Export from '../components/Export';
+import Import from '../components/Import';
 
-async function ExportPage() {
+async function ImportPage() {
 
     let connectionString = "";
     if (process.env.CONNECTION_STRING){
@@ -11,8 +11,8 @@ async function ExportPage() {
     }
 
     let docString = "";
-    if (process.env.DOC_STRING){
-        docString = process.env.DOC_STRING;
+    if (process.env.DOC_STRING_UPLOAD){
+        docString = process.env.DOC_STRING_UPLOAD;
     }
   
     const clientToken = await getOrCreateDocAndToken(connectionString, docString);
@@ -27,10 +27,10 @@ async function ExportPage() {
     return (
         <div>
             <YDocProvider clientToken={clientToken}>
-                <Export/>
+                <Import/>
             </YDocProvider>
         </div>
     )
 }
 
-export default ExportPage;
+export default ImportPage;
