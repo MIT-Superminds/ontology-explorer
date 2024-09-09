@@ -2,6 +2,7 @@ import type { Map as YMap } from 'yjs'
 
 import { Activity } from '@/app/constants/Activity';
 import { ActivityFieldText, ActivityFieldList } from '@/app/constants/CustomProps';
+import { InheritableFieldNames, Inheritance } from '../constants/Inheritance';
 
 const activityPropList = Object.getOwnPropertyNames( new Activity('') )
 // const activityPropList: [ keyof Activity ] = Object.getOwnPropertyNames(new Activity(''))
@@ -18,6 +19,26 @@ export function activitySorter(a: Activity | undefined, b: Activity | undefined)
     }
 }
 
+export function calculateInheritance(activitites: YMap<Activity[]>, currentActivity: Activity[], propertyName: ActivityFieldText) {
+    const getFieldBottomUp = (activity: Activity) => {
+        let _uuidList: Array<string> = [];
+        activity.generalizations.forEach( (uuid:string) => {
+            const nextActivity = activitites.get(uuid);
+            if(nextActivity){
+                let fieldValue = nextActivity[0][propertyName];
+                if(fieldValue){
+                    _uuidList.push(nextActivity[0].uuid);
+                }else{
+                    getFieldBottomUp(nextActivity[0]).forEach( entry => {
+                        _uuidList.push(entry);
+                    });
+                }
+            }
+        })
+        return _uuidList;
+    }
+    return getFieldBottomUp(currentActivity[0])
+}
 
 export function randomColor() {
     const hue = Math.random() * 360

@@ -101,9 +101,14 @@ const Explorer: React.FC<OntologyProps> = (props) => {
     }
 
     const changeCurrentActivity = (_uuid: string) => {
-        props.uuid = _uuid;
-        window.history.pushState({}, '', '/explorer/'+_uuid);
-        setCurrentActivity(activities.get(_uuid));
+        if(_uuid){
+            props.uuid = _uuid;
+            window.history.pushState({}, '', '/explorer/'+_uuid);
+            setCurrentActivity(activities.get(_uuid));
+        }else{
+            window.history.pushState({}, '', '/explorer/');
+            setCurrentActivity(undefined);
+        }
     }
 
     return (

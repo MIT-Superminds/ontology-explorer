@@ -19,8 +19,9 @@ export const OnlinePresence: React.FC<OnlinePresenceProps> = (props) => {
             if(user.id_focus && currentActivityFocus){
                 return (
                     <Popup
+                        key={user.email} 
                         trigger={
-                            <div key={user.email} style={customStyle}>
+                            <div style={customStyle}>
                                 <p style={{margin: "auto", color: "white", mixBlendMode: "difference"}}>
                                 {user.name.split(" ").map(name => {return name[0]})}
                                 </p>
@@ -36,8 +37,9 @@ export const OnlinePresence: React.FC<OnlinePresenceProps> = (props) => {
             }else{
                 return (
                     <Popup
+                        key={user.email} 
                         trigger={
-                            <div key={user.email} style={customStyle}>
+                            <div style={customStyle}>
                                 <p style={{margin: "auto", color: "white", mixBlendMode: "difference"}}>
                                 {user.name.split(" ").map(name => {return name[0]})}
                                 </p>
