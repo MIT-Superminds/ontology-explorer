@@ -33,6 +33,7 @@ const Node: React.FC<NodeProps<OntologyNodeType>> = ({ id, data }) => {
                 className='absolute top-1/2 right-[-2rem] transform -translate-y-1/2'
                 type='source'
                 position={data.direction === 'LR' ? Position.Right : Position.Bottom}
+                isConnectable={false}
             />
         </div>
     );

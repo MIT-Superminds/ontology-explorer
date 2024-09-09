@@ -1,10 +1,9 @@
-import React, { use, useEffect } from 'react';
+import React from 'react';
 import type { Map as YMap } from 'yjs';
 import { Activity } from '@/app/constants/Activity';
 import ReactFlowComponent from './ReactFlowComponent';
 import { graphDirection, OntologyNode } from './ReactFlowComponent/config/types';
 import { createNode, generateEdges } from './ReactFlowComponent/util/transform';
-import { useGraphStore } from './ReactFlowComponent/store/graphStore';
 
 interface OntologyGraphProps {
     activities: YMap<Activity[]>;
@@ -18,21 +17,23 @@ const OntologyGraph: React.FC<OntologyGraphProps> = ({ activities, type, changeC
     let direction: graphDirection = 'LR';
 
     function addToCharts(_activityA: Activity) {
-        const _uuidA = _activityA.uuid;
-        const titleA = _activityA.title;
-        const specList = _activityA.specializations;
-        const partList = _activityA.subactivities;
+        const { uuid, title, generalizations, specializations, subactivities } = _activityA;
 
         if (type === 'Generalizations/Specializations') {
-            nodes.push(createNode(_uuidA, titleA, specList, changeCurrentActivity, direction));
+            // Temporary check to exclude 'use/part' nodes from the 'gen/spec' graph rendering
+            // TODO: Implement a more comprehensive check
+            if (!specializations.length && !generalizations.length) return;
+
+            nodes.push(createNode(uuid, title, specializations, changeCurrentActivity, direction));
         } else {
             direction = 'TB';
-            if (partList.length > 0) nodes.push(createNode(_uuidA, titleA, partList, changeCurrentActivity, direction));
-            partList.forEach((_uuidB:string) => {
+            if (subactivities.length > 0)  {
+                nodes.push(createNode(uuid, title, subactivities, changeCurrentActivity, direction));
+            }
+            subactivities.forEach((_uuidB:string) => {
                 let _activityB = activities.get(_uuidB);
                 if (_activityB){
                     let titleB = _activityB[0].title;
-                    console.log('Activity B exists:', titleB);
                     nodes.push(createNode(_uuidB, titleB, undefined, changeCurrentActivity, direction));
                 }
             })
@@ -53,8 +54,13 @@ const OntologyGraph: React.FC<OntologyGraphProps> = ({ activities, type, changeC
     const edges = generateEdges(nodes);
 
     return (
-        <div style={{ width: '100vw', height: '100vh' }}>
-            <ReactFlowComponent _nodes={nodes} _edges={edges} currentActivityId={currentActivity && currentActivity[0].uuid} direction={direction}/>
+        <div style={{ width: '100%', height: '100vh' }}>
+            <ReactFlowComponent
+                _nodes={nodes}
+                _edges={edges}
+                currentActivityId={currentActivity?.[0]?.uuid}
+                direction={direction}
+            />
         </div>
     );
 };
