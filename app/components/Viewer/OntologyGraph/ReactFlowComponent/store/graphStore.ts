@@ -17,6 +17,7 @@ interface GraphState {
     setNodes: (nodes: OntologyNode[]) => void;
     setEdges: (edges: OntologyEdge[]) => void;
     setSelectedNode: (node: OntologyNode | undefined) => void;
+    clearSelectedNode: () => void;
 
     onNodesChange: (nodeChanges: NodeChange<OntologyNode>[]) => void;
     onEdgesChange: (edgeChanges: EdgeChange[]) => void;
@@ -34,6 +35,7 @@ export const useGraphStore = create<GraphState>((set, get) => ({
     setNodes: (nodes) => set({ nodes }),
     setEdges: (edges) => set({ edges }),
     setSelectedNode: (node: OntologyNode | undefined) => set({ selectedNode: node }),
+    clearSelectedNode:() => set({ selectedNode: null }),
 
     onNodesChange: (nodeChanges: NodeChange<OntologyNode>[]) =>
         set((state) => ({

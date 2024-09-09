@@ -4,7 +4,7 @@ import { useMap, usePresence, usePresenceSetter } from '@y-sweet/react'
 import { useEffect, useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import { Grid } from 'semantic-ui-react'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 import { Activity } from '@/app/constants/Activity'
 import { Role } from '@/app/constants/Role'
@@ -37,6 +37,17 @@ const Explorer: React.FC<OntologyProps> = (props) => {
     //         setCurrentActivity(activities.get(newUUID));
     //     }
     // }
+
+    const pathname = usePathname();
+  
+    useEffect(() => {
+        const uuid = pathname.split('/')[2];
+        props.uuid = uuid;
+        const activity = activities.get(uuid);
+        if (activity) {
+            setCurrentActivity(activity);
+        }
+    }, [pathname, activities, setCurrentActivity]);
 
     useEffect(() => {
         setCurrentActivity(activities.get(props.uuid))
