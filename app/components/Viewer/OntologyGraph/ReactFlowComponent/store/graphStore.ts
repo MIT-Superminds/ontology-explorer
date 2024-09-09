@@ -9,21 +9,21 @@ import {
     applyNodeChanges,
 } from '@xyflow/react';
 
-// TODO:: Fix types
 interface GraphState {
-    nodes: any[];
+    nodes: OntologyNode[];
     edges: OntologyEdge[];
-    selectedNode: any | null;
+    selectedNode: OntologyNode | null;
 
-    setNodes: (nodes: any[]) => void;
+    setNodes: (nodes: OntologyNode[]) => void;
     setEdges: (edges: OntologyEdge[]) => void;
-    setSelectedNode: (node: any | null) => void;
+    setSelectedNode: (node: OntologyNode | undefined) => void;
 
-    onNodesChange: (nodeChanges: NodeChange[]) => void;
+    onNodesChange: (nodeChanges: NodeChange<OntologyNode>[]) => void;
     onEdgesChange: (edgeChanges: EdgeChange[]) => void;
     onConnect: (params: Connection) => void;
 
-    getNodeById: (id: string | null) => any | undefined;
+    getNodeById: (id: string | null) => OntologyNode | undefined;
+    setSelectedNodeById: (id: string | null) => void;
 }
 
 export const useGraphStore = create<GraphState>((set, get) => ({
@@ -33,18 +33,16 @@ export const useGraphStore = create<GraphState>((set, get) => ({
 
     setNodes: (nodes) => set({ nodes }),
     setEdges: (edges) => set({ edges }),
-    setSelectedNode: (node: any | null) => set({ selectedNode: node }),
+    setSelectedNode: (node: OntologyNode | undefined) => set({ selectedNode: node }),
 
-    onNodesChange: (nodeChanges: NodeChange[]) =>
+    onNodesChange: (nodeChanges: NodeChange<OntologyNode>[]) =>
         set((state) => ({
             nodes: applyNodeChanges(nodeChanges, state.nodes),
         })),
-
     onEdgesChange: (edgeChanges: EdgeChange[]) =>
         set((state) => ({
             edges: applyEdgeChanges(edgeChanges, state.edges),
         })),
-
     onConnect: (params: Connection) =>
         set((state) => ({
             edges: addEdge(params, state.edges),
@@ -53,5 +51,9 @@ export const useGraphStore = create<GraphState>((set, get) => ({
     getNodeById: (id: string | null) => {
         const nodes = get().nodes;
         return nodes.find((node) => node.id === id);
+    },
+    setSelectedNodeById: (id: string | null) => {
+        const node = get().getNodeById(id);
+        get().setSelectedNode(node);
     },
 }));

@@ -1,7 +1,7 @@
 import React from 'react';
+import { useGraphStore } from '../../store/graphStore';
 import { Handle, NodeProps, Position } from '@xyflow/react';
 import { OntologyNode as OntologyNodeType } from '../../config/types';
-import { useGraphStore } from '../../store/graphStore';
 
 export const nodeWidth = 150;
 export const nodeHeight = 80;
@@ -24,7 +24,7 @@ const Node: React.FC<NodeProps<OntologyNodeType>> = ({ id, data }) => {
             {/* Handle for incoming connections */}
             <Handle
                 type='target'
-                position={Position.Left}
+                position={data.direction === 'LR' ? Position.Left : Position.Top}
                 isConnectable={false}
             />
             <div>{data.label}</div>
@@ -32,7 +32,7 @@ const Node: React.FC<NodeProps<OntologyNodeType>> = ({ id, data }) => {
             <Handle
                 className='absolute top-1/2 right-[-2rem] transform -translate-y-1/2'
                 type='source'
-                position={Position.Right}
+                position={data.direction === 'LR' ? Position.Right : Position.Bottom}
             />
         </div>
     );

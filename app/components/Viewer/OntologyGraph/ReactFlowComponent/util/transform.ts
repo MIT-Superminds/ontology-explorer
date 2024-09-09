@@ -1,4 +1,4 @@
-import { NodeType, OntologyEdge, OntologyNode } from '../config/types';
+import { graphDirection, NodeType, OntologyEdge, OntologyNode } from '../config/types';
 
 const position = { x: 0, y: 0 };
 const edgeType = 'straight';
@@ -6,8 +6,9 @@ const edgeType = 'straight';
 export function createNode(
     id: string,
     label: string,
-    childIds: string[],
-    changeCurrentActivity: Function | undefined,
+    childIds: string[] = [],
+    changeCurrentActivity: Function,
+    direction: graphDirection,
 ): OntologyNode {
     return {
         id: id,
@@ -15,10 +16,13 @@ export function createNode(
             label: label,
             childIds: childIds,
             changeCurrentActivity: changeCurrentActivity,
+            direction: direction,
         },
         position,
         selectable: true,
-        type: NodeType.base,
+        draggable: false,
+        deletable: false,
+        type: NodeType.baseOntologyNode,
     };
 }
 

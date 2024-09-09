@@ -6,7 +6,6 @@ import { Radio } from 'semantic-ui-react'
 import { ExplorerProps } from '@/app/constants/CustomProps';
 import { ActivitySearch } from './ActivitySearch';
 import { MermaidChart } from './MermaidChart';
-import Cytoscape from './Cytoscape';
 import OntologyGraph from './OntologyGraph';
 
 const Viewer: React.FC<ExplorerProps> = (props) => {
@@ -46,8 +45,12 @@ const Viewer: React.FC<ExplorerProps> = (props) => {
                 changeCurrentActivity={props.changeCurrentActivity}
                 currentActivity={props.currentActivity}
             /> */}
-            <OntologyGraph activities={props.activities} changeCurrentActivity={props.changeCurrentActivity} />
-            {/* <Cytoscape activities={props.activities} changeCurrentActivity={props.changeCurrentActivity} /> */}
+            <OntologyGraph
+                activities={props.activities}
+                changeCurrentActivity={props.changeCurrentActivity}
+                type={toggleLabelText()}
+                currentActivity={props.currentActivity}
+            />
         </div>
     )
 }

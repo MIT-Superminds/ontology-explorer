@@ -1,53 +1,47 @@
-import {
-    addEdge,
-    applyEdgeChanges,
-    applyNodeChanges,
-    OnConnect,
-    OnEdgesChange,
-    OnNodesChange,
-    ReactFlow,
-    useEdgesState,
-    useNodesState,
-} from '@xyflow/react';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import '@xyflow/react/dist/style.css';
-import { NodeType, OntologyEdge, OntologyNode } from './config/types';
-import Node, { nodeHeight, nodeWidth } from './components/Nodes/Node';
-import { useGraphStore } from './store/graphStore';
 import { generateLayout } from './util/layout';
+import { useGraphStore } from './store/graphStore';
+import { NodeTypes, ReactFlow } from '@xyflow/react';
+import { graphDirection, NodeType, OntologyEdge, OntologyNode } from './config/types';
+import Node, { nodeHeight, nodeWidth } from './components/Nodes/Node';
 
-const nodeTypes = {
-    [NodeType.base]: Node,
-};
-interface ReactFlowComponentTypes {
+const nodeTypes: NodeTypes = { [NodeType.baseOntologyNode]: Node };
+interface ReactFlowComponentProps {
     _nodes: OntologyNode[];
     _edges: OntologyEdge[];
+    currentActivityId?: string;
+    direction: graphDirection;
 }
-const ReactFlowComponent: React.FC<ReactFlowComponentTypes> = ({
+const ReactFlowComponent: React.FC<ReactFlowComponentProps> = ({
     _nodes,
     _edges,
+    currentActivityId,
+    direction
 }) => {
     const {
         nodes,
         edges,
         setNodes,
         setEdges,
+        onConnect,
         onNodesChange,
         onEdgesChange,
-        onConnect,
+        setSelectedNodeById,
     } = useGraphStore();
 
+    const { nodes: layoutedNodes, edges: layoutedEdges } = useMemo(() => {
+        return generateLayout(_nodes, _edges, nodeWidth, nodeHeight, direction);
+    }, [_nodes, _edges]);
+    
     useEffect(() => {
-        const { nodes: layoutedNodes, edges: layoutedEdges } = generateLayout(
-            _nodes,
-            _edges,
-            nodeWidth,
-            nodeHeight
-        );
-
         setNodes(layoutedNodes);
         setEdges(layoutedEdges);
-    }, [_nodes, _edges, setNodes, setEdges]);
+    }, [layoutedNodes, layoutedEdges, setNodes, setEdges]);
+
+    useEffect(() => {
+        if (currentActivityId) setSelectedNodeById(currentActivityId);
+    }, [currentActivityId]);
 
     return (
         <>

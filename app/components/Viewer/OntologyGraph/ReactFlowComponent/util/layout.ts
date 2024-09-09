@@ -1,12 +1,13 @@
 import dagre from '@dagrejs/dagre';
 import { Position } from '@xyflow/react';
-import { OntologyEdge, OntologyNode } from '../config/types';
+import { graphDirection, OntologyEdge, OntologyNode } from '../config/types';
 
 export function generateLayout(
   nodes: OntologyNode[],
   edges: OntologyEdge[],
   nodeWidth: number,
   nodeHeight: number,
+  direction: graphDirection,
   nodeSep = nodeHeight * .5, //Defines vertical distance between nodes
   rankSep = nodeWidth * 1, //Defines horizontal distance between nodes
 ): {
@@ -17,7 +18,7 @@ export function generateLayout(
   graph
     .setDefaultEdgeLabel(() => ({}))
     .setGraph({
-      rankdir: 'LR', //`LR` For horizontal direction: https://github.com/dagrejs/dagre/wiki#configuring-the-layout
+      rankdir: direction, // https://github.com/dagrejs/dagre/wiki#configuring-the-layout
       nodesep: nodeSep,
       ranksep: rankSep,
     });
