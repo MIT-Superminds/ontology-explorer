@@ -6,6 +6,7 @@ import { Radio } from 'semantic-ui-react'
 import { ExplorerProps } from '@/app/constants/CustomProps';
 import { ActivitySearch } from './ActivitySearch';
 import { MermaidChart } from './MermaidChart';
+import { OnlinePresence } from './OnlinePresence';
 
 const Viewer: React.FC<ExplorerProps> = (props) => {
     const [chartToggle, setChartToggle] = useState<boolean>(true);
@@ -26,6 +27,10 @@ const Viewer: React.FC<ExplorerProps> = (props) => {
 
     return(
         <div>
+            <OnlinePresence
+                presence={props.presence}
+                activities={props.activities}
+            />
             <ActivitySearch
                 createActivity={props.createActivity}
                 changeCurrentActivity={props.changeCurrentActivity}

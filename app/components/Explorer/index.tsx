@@ -10,14 +10,12 @@ import { Activity } from '@/app/constants/Activity'
 import { Role } from '@/app/constants/Role'
 import { Dependency } from '@/app/constants/Dependency'
 import { EvaluationDimension } from '@/app/constants/EvaluationDimension'
-import { OntologyProps } from '@/app/constants/CustomProps'
+import { OntologyProps, Presence } from '@/app/constants/CustomProps'
 
-import { randomColor, cleanUpRelatedBeforeDelete, checkLoginStatus, getCookie } from '@/app//utils/utils'
+import { randomColor, checkLoginStatus, getCookie, deleteActivity } from '@/app//utils/utils'
 
 import Editor from '@/app/components/Editor'
 import Viewer from '@/app/components/Viewer'
-
-type Presence = { id_focus: string; email: string|null; name: string|null; color: string; }
 
 const Explorer: React.FC<OntologyProps> = (props) => {
     const router = useRouter();
@@ -50,23 +48,35 @@ const Explorer: React.FC<OntologyProps> = (props) => {
     useEffect(() => {
         checkLoginStatus(document).then((loggedIn) => {
             if(loggedIn){
-                let name = getCookie(document, "ontology_auth_name");
-                if(name){
-                    name = decodeURI(name);
-                }
                 setLoggedIn(true);
-                setPresence({
-                    id_focus: '',
-                    email: getCookie(document, "ontology_auth_email"),
-                    name: name,
-                    color: myColor,
-                })
             }
             else{
                 router.push('/');
             }
         })
     }, [], )
+
+    useEffect(() => {
+        let name = getCookie(document, "ontology_auth_name");
+        if(name){
+            name = decodeURI(name);
+        }
+        if (currentActivity){
+            setPresence({
+                id_focus: currentActivity[0].uuid,
+                email: getCookie(document, "ontology_auth_email"),
+                name: name,
+                color: myColor,
+            })
+        }else{
+            setPresence({
+                id_focus: '',
+                email: getCookie(document, "ontology_auth_email"),
+                name: name,
+                color: myColor,
+            })
+        }
+    }, [currentActivity])
 
     function createActivity(title: string = "New Activity", changeToNewActivity: boolean = true): string {
         const newActivity = new Activity(uuid());
@@ -81,8 +91,7 @@ const Explorer: React.FC<OntologyProps> = (props) => {
 
     const removeActivity = (event: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => {
         let uuidToDelete = event.currentTarget.id;
-        cleanUpRelatedBeforeDelete(uuidToDelete)
-        activities.delete(uuidToDelete);
+        deleteActivity(activities, uuidToDelete);
         setCurrentActivity(undefined);
     }
 
@@ -111,6 +120,7 @@ const Explorer: React.FC<OntologyProps> = (props) => {
                     dependencies = {dependencies}
                     evaluationDimensions = {evaluationDimensions}
                     roles = {roles}
+                    presence = {presence}
                 />
             </Grid.Column>
             <Grid.Column width={10} textAlign='center'>
@@ -124,6 +134,8 @@ const Explorer: React.FC<OntologyProps> = (props) => {
                     dependencies = {dependencies}
                     evaluationDimensions = {evaluationDimensions}
                     roles = {roles}
+                    presence = {presence}
+
                 />
             </Grid.Column>
         </Grid>

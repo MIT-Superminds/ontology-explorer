@@ -3,6 +3,8 @@ import type { Map as YMap } from 'yjs'
 import { Activity } from '@/app/constants/Activity';
 import { ActivityFieldText, ActivityFieldList } from '@/app/constants/CustomProps';
 
+const activityPropList = Object.getOwnPropertyNames( new Activity('') )
+// const activityPropList: [ keyof Activity ] = Object.getOwnPropertyNames(new Activity(''))
 
 export function activitySorter(a: Activity | undefined, b: Activity | undefined){
     if(a && b){
@@ -82,9 +84,10 @@ function typeRelationMap(_switch: ActivityFieldList): ActivityFieldList {
 
 
 export function deleteActivity(_activities: YMap<Activity[]>, UUIDtoDelete: string,){
+    cleanUpRelatedBeforeDelete(_activities, UUIDtoDelete)
     const _activityToDelete = _activities.get(UUIDtoDelete)
     if (_activityToDelete){
-        _activities.delete(UUIDtoDelete);
+        _activities.delete(UUIDtoDelete)
     }
 }
 
@@ -93,10 +96,8 @@ function removeRelatedEntries(_activities: YMap<Activity[]>, changedUUID: string
     console.log('drop', changedUUID, type, originUUID)
     const _otherActivity = _activities.get(changedUUID)
     if (_otherActivity){
-        let newArr = _otherActivity[0][typeRelationMap(type)];
-        newArr = newArr.filter(item => item !== originUUID)
-        _otherActivity[0][typeRelationMap(type)] = newArr;
-        _activities.set(_otherActivity[0].uuid, _otherActivity);
+        _otherActivity[0][typeRelationMap(type)] = _otherActivity[0][typeRelationMap(type)].filter(item => item !== originUUID)
+        _activities.set(_otherActivity[0].uuid, _otherActivity)
     }
 }
 
@@ -105,33 +106,45 @@ function addRelatedEntries(_activities: YMap<Activity[]>, changedUUID: string, t
     console.log('add', changedUUID, type, originUUID)
     const _otherActivity = _activities.get(changedUUID)
     if (_otherActivity){
-        _otherActivity[0][typeRelationMap(type)].push(originUUID);
-        _activities.set(_otherActivity[0].uuid, _otherActivity);
+        _otherActivity[0][typeRelationMap(type)].push(originUUID)
+        _activities.set(_otherActivity[0].uuid, _otherActivity)
     }
 }
 
 
-export function cleanUpRelatedBeforeDelete(uuidToClean: string){
-    
+export function cleanUpRelatedBeforeDelete(_activities: YMap<Activity[]>, uuidToClean: string){
+    // TODO: consider linking parent/child elements of deleted element when removed
+    // TODO: consider cleaning up inheritance
+    let activityList = Array.from(_activities.keys())
+    activityList.forEach( (_uuid: string) => {
+        const _activity = _activities.get(_uuid)
+        if (_activity){
+            _activity[0].subactivities = _activity[0].subactivities.filter(item => item !== uuidToClean)
+            _activity[0].uses = _activity[0].uses.filter(item => item !== uuidToClean)
+            _activity[0].generalizations = _activity[0].generalizations.filter(item => item !== uuidToClean)
+            _activity[0].specializations = _activity[0].specializations.filter(item => item !== uuidToClean)
+            _activities.set(_activity[0].uuid, _activity);
+        }
+    })
 }
 
 
 export function updateActivitiesList(_value: Array<string>, _currentActivityUUID: string, _activities: YMap<Activity[]>, _propertyName: ActivityFieldList){
-    const _currentActivity = _activities.get(_currentActivityUUID);
+    const _currentActivity = _activities.get(_currentActivityUUID)
     if (_currentActivity){
-        const curActUUID = _currentActivity[0].uuid;
-        const curActArray = _currentActivity[0][_propertyName];
-        const curActArrayLen = curActArray.length;
-        const newActArrayLen = _value.length;
+        const curActUUID = _currentActivity[0].uuid
+        const curActArray = _currentActivity[0][_propertyName]
+        const curActArrayLen = curActArray.length
+        const newActArrayLen = _value.length
         console.log(curActUUID, curActArrayLen, newActArrayLen)
         if(curActArrayLen > newActArrayLen){
-            let difference = curActArray.filter(x => !_value.includes(x));
-            removeRelatedEntries(_activities, difference[0], _propertyName, curActUUID);
+            let difference = curActArray.filter(x => !_value.includes(x))
+            removeRelatedEntries(_activities, difference[0], _propertyName, curActUUID)
         }else{
-            let difference = _value.filter(x => !curActArray.includes(x));
-            addRelatedEntries(_activities, difference[0], _propertyName, curActUUID);
+            let difference = _value.filter(x => !curActArray.includes(x))
+            addRelatedEntries(_activities, difference[0], _propertyName, curActUUID)
         }
-        _currentActivity[0][_propertyName] = _value;
-        _activities.set(_currentActivity[0].uuid, _currentActivity);
+        _currentActivity[0][_propertyName] = _value
+        _activities.set(_currentActivity[0].uuid, _currentActivity)
         }
 }
