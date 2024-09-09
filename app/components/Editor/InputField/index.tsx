@@ -2,7 +2,7 @@
 
 import React from 'react';
 import type { Map as YMap } from 'yjs';
-import { Container, Dropdown, Header, TextArea } from 'semantic-ui-react';
+import { Container, Header, TextArea } from 'semantic-ui-react';
 
 import { Activity } from '@/app/constants/Activity';
 import { ActivityFieldText } from '@/app/constants/CustomProps';
@@ -75,6 +75,7 @@ export const InputField: React.FC<InputFieldProps> = (props) => {
                         <TextArea
                             key={currentActivity[0].uuid+props.fieldTitle}
                             id={currentActivity[0].uuid+props.fieldTitle}
+                            className={"custom-placeholder"}
                             rows={1}
                             value={currentActivity[0][props.propertyName]}
                             placeholder={inheritedValue}
