@@ -62,7 +62,6 @@ export const InputField: React.FC<InputFieldProps> = (props) => {
             );
         }else{
             if(inheritedValue && inheritedActivity){
-                console.log("empty inherit:", fieldInheritance, ", for:", props.propertyName);
                 return(
                     <div className="InputField" style={{paddingBottom: '2em'}}>
                         <Container fluid>
@@ -88,7 +87,6 @@ export const InputField: React.FC<InputFieldProps> = (props) => {
                     </div>
                 );
             }else{
-                console.log("inherit:", fieldInheritance, ", for:", props.propertyName);
                 return(
                     <div className="InputField" style={{paddingBottom: '2em'}}>
                         <Container fluid>
