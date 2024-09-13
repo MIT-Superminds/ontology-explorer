@@ -9,7 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@dagrejs/dagre": "^1.1.4",
+    "@xyflow/react": "^12.2.0",
     "@y-sweet/react": "^0.1.2",
+    "elkjs": "^0.9.3",
     "js-cookie": "^3.0.5",
     "mermaid": "^10.9.1",
     "next": "14.2.4",
@@ -17,7 +20,8 @@
     "react-dom": "^18.3.1",
     "semantic-ui-css": "^2.5.0",
     "semantic-ui-react": "^2.1.5",
-    "yjs": "^13.6.18"
+    "yjs": "^13.6.18",
+    "zustand": "^4.5.5"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",
