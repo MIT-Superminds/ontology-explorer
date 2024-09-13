@@ -54,7 +54,7 @@ const OntologyGraph: React.FC<OntologyGraphProps> = ({ activities, type, changeC
     const edges = generateEdges(nodes);
 
     return (
-        <div style={{ width: '100%', height: '100vh' }}>
+        <div style={{ width: '100%', height: '88vh' }}>
             <ReactFlowComponent
                 _nodes={nodes}
                 _edges={edges}
