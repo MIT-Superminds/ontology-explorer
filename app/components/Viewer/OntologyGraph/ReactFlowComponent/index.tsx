@@ -27,6 +27,7 @@ const ReactFlowComponent: React.FC<ReactFlowComponentProps> = ({
         onConnect,
         onNodesChange,
         onEdgesChange,
+        clearSelectedNode,
         setSelectedNodeById,
     } = useGraphStore();
 
@@ -39,9 +40,13 @@ const ReactFlowComponent: React.FC<ReactFlowComponentProps> = ({
         setEdges(layoutedEdges);
     }, [layoutedNodes, layoutedEdges, setNodes, setEdges]);
 
-    // useEffect(() => {
-    //     if (currentActivityId) setSelectedNodeById(currentActivityId);
-    // }, [currentActivityId]);
+    useEffect(() => {
+        if (currentActivityId) {
+            setSelectedNodeById(currentActivityId);
+        } else {
+            clearSelectedNode();
+        }
+    }, [currentActivityId]);
 
     return (
         <>
