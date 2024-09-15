@@ -36,7 +36,33 @@ export const InputField: React.FC<InputFieldProps> = (props) => {
             }
         }
 
-        if(currentActivity[0][props.propertyName]){
+        if(inheritedValue && inheritedActivity && !currentActivity[0][props.propertyName]){
+            return(
+                <div className="InputField" style={{paddingBottom: '2em'}}>
+                    <Container fluid>
+                        <Header as='h5' style={{marginBottom: '0'}}>{props.fieldTitle}</Header>
+                        {( props.showInstructions && 
+                        <p className="description">
+                            {props.description}
+                        </p>
+                        )}
+                    </Container>
+                    <TextArea
+                        key={currentActivity[0].uuid+props.fieldTitle}
+                        id={currentActivity[0].uuid+props.fieldTitle}
+                        className={"custom-placeholder"}
+                        rows={1}
+                        value={currentActivity[0][props.propertyName]}
+                        placeholder={inheritedValue}
+                        onChange={(e) => {
+                            e.preventDefault();
+                            updateActivitiesText(e.target.value, currentActivity, props.activities, props.propertyName)
+                        }}
+                    />
+                    <span>Inherited from: {inheritedActivity[0].title}</span>
+                </div>
+            );
+        }else{
             return(
                 <div className="InputField" style={{paddingBottom: '2em'}}>
                     <Container fluid>
@@ -60,58 +86,6 @@ export const InputField: React.FC<InputFieldProps> = (props) => {
                     />
                 </div>
             );
-        }else{
-            if(inheritedValue && inheritedActivity){
-                return(
-                    <div className="InputField" style={{paddingBottom: '2em'}}>
-                        <Container fluid>
-                            <Header as='h5' style={{marginBottom: '0'}}>{props.fieldTitle}</Header>
-                            {( props.showInstructions && 
-                            <p className="description">
-                                {props.description}
-                            </p>
-                            )}
-                        </Container>
-                        <TextArea
-                            key={currentActivity[0].uuid+props.fieldTitle}
-                            id={currentActivity[0].uuid+props.fieldTitle}
-                            className={"custom-placeholder"}
-                            rows={1}
-                            value={currentActivity[0][props.propertyName]}
-                            placeholder={inheritedValue}
-                            onChange={(e) => {
-                                e.preventDefault();
-                                updateActivitiesText(e.target.value, currentActivity, props.activities, props.propertyName)
-                            }}
-                        />
-                        <span>Inherited from: {inheritedActivity[0].title}</span>
-                    </div>
-                );
-            }else{
-                return(
-                    <div className="InputField" style={{paddingBottom: '2em'}}>
-                        <Container fluid>
-                            <Header as='h5' style={{marginBottom: '0'}}>{props.fieldTitle}</Header>
-                            {( props.showInstructions && 
-                            <p className="description">
-                                {props.description}
-                            </p>
-                            )}
-                        </Container>
-                        <TextArea
-                            key={currentActivity[0].uuid+props.fieldTitle}
-                            id={currentActivity[0].uuid+props.fieldTitle}
-                            rows={1}
-                            value={currentActivity[0][props.propertyName]}
-                            placeholder={props.propertyName.toUpperCase()}
-                            onChange={(e) => {
-                                e.preventDefault();
-                                updateActivitiesText(e.target.value, currentActivity, props.activities, props.propertyName)
-                            }}
-                        />
-                    </div>
-                );
-            }
         }
     }
 }

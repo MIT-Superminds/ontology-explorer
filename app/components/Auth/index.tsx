@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent } from 'react';
-import { Form, Input, Button, Label } from 'semantic-ui-react';
+import { Form, Input, Button, Label, SemanticCOLORS } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 
 
@@ -67,7 +67,7 @@ export const Auth: React.FC = () => {
                 <Button type='submit' href=''>Login To Ontology Explorer </Button>
             </Form>
             {status &&
-            <Label color={color}>{status}</Label>
+            <Label color={color as SemanticCOLORS}>{status}</Label>
             }
         </div>
     );

@@ -11,6 +11,7 @@ class InheritanceField {
 }
 
 export const InheritableFieldNames = [
+    'subactivities',
     'preconditions',
     'goal',
     'otherResults',
@@ -21,6 +22,7 @@ export const InheritableFieldNames = [
 
 
 export class Inheritance {
+    subactivities: InheritanceField
     preconditions: InheritanceField
     goal: InheritanceField
     otherResults: InheritanceField
@@ -30,6 +32,7 @@ export class Inheritance {
     performance: InheritanceField
 
     constructor(){
+        this.subactivities = new InheritanceField()
         this.preconditions = new InheritanceField()
         this.goal = new InheritanceField()
         this.otherResults = new InheritanceField()
