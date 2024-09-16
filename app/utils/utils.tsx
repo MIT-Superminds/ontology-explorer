@@ -19,7 +19,7 @@ export function activitySorter(a: Activity | undefined, b: Activity | undefined)
     }
 }
 
-export function calculateInheritance(activitites: YMap<Activity[]>, currentActivity: Activity[], propertyName: ActivityFieldText) {
+export function calculateInheritance(activitites: YMap<Activity[]>, currentActivity: Activity[], propertyName: ActivityFieldText | ActivityFieldList) {
     const getFieldBottomUp = (activity: Activity) => {
         let _uuidList: Array<string> = [];
         activity.generalizations.forEach( (uuid:string) => {
