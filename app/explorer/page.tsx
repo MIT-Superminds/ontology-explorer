@@ -2,6 +2,7 @@ import { YDocProvider } from '@y-sweet/react'
 import { getOrCreateDocAndToken, encodeClientToken } from '@y-sweet/sdk'
 
 import { Explorer } from "../components";
+import './custom.css';
 
 
 async function ExplorerPage({ uuid }: { uuid: string }) {

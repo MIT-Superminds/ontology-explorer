@@ -7,5 +7,5 @@ export {
     Auth,
     Editor,
     Explorer,
-    Viewer,
+    Viewer
 }

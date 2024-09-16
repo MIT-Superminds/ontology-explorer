@@ -5,7 +5,7 @@ import { Radio } from 'semantic-ui-react'
 
 import { ExplorerProps } from '@/app/constants/CustomProps';
 import { ActivitySearch } from './ActivitySearch';
-import { MermaidChart } from './MermaidChart';
+import { OnlinePresence } from './OnlinePresence';
 import OntologyGraph from './OntologyGraph';
 
 const Viewer: React.FC<ExplorerProps> = (props) => {
@@ -27,6 +27,10 @@ const Viewer: React.FC<ExplorerProps> = (props) => {
 
     return(
         <div>
+            <OnlinePresence
+                presence={props.presence}
+                activities={props.activities}
+            />
             <ActivitySearch
                 createActivity={props.createActivity}
                 changeCurrentActivity={props.changeCurrentActivity}
@@ -39,12 +43,6 @@ const Viewer: React.FC<ExplorerProps> = (props) => {
                 label={toggleLabelText()}
                 onChange={handleChartToggle}
             />
-            {/* <MermaidChart
-                activities={props.activities}
-                type={toggleLabelText()}
-                changeCurrentActivity={props.changeCurrentActivity}
-                currentActivity={props.currentActivity}
-            /> */}
             <OntologyGraph
                 activities={props.activities}
                 changeCurrentActivity={props.changeCurrentActivity}

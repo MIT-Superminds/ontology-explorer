@@ -12,8 +12,16 @@ export type ActivityFieldText = 'title' | 'description' | 'preconditions' | 'goa
 export type ActivityFieldList = 'subactivities' | 'uses' | 'specializations' | 'generalizations'
 
 
+export type Presence = { id_focus: string; email: string|null; name: string|null; color: string; }
+
+
 export interface OntologyProps {
     uuid: string,
+}
+
+export interface OnlinePresenceProps {
+    presence: Map<number, Presence>,
+    activities: YMap<Activity[]>,
 }
 
 export interface ExplorerProps {
@@ -26,4 +34,5 @@ export interface ExplorerProps {
     roles: YMap<Role[]>,
     dependencies: YMap<Dependency[]>,
     evaluationDimensions: YMap<EvaluationDimension[]>,
+    presence: Map<number, Presence>
 }
