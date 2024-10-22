@@ -1,4 +1,4 @@
-THIS PROJECT IS NO LONGER BEING MAINTAINED.
+THIS REPO IS NO LONGER BEING MAINTAINED.
 
 SEE https://github.com/MIT-Center-for-Collective-Intelligence/1Ontology
 
